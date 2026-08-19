@@ -30,6 +30,9 @@ Change into the client directory and install node dependencies for the frontend.
   
 3. Configure an environment variable. From the server directory, create a .env file and configure a JWT-SECRET-KEY:
     ```
+    python3 -c "import secrets; print(secrets.token_hex(32))"
+    ```
+    ```
     JWT_SECRET_KEY=your-secret-key-here
     ```
 
