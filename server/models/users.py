@@ -15,7 +15,7 @@ class User(db.Model):
   _password_hash = db.Column(db.String(255), nullable=False)
   
   # Profile Information
-  date_of_birth = db.Column(db.Date, nullable=True)
+  date_of_birth = db.Column(db.Date, nullable=False)
   bio = db.Column(db.Text, nullable=True)
   profile_pic_url = db.Column(db.String(500), nullable=True)
   
@@ -73,7 +73,7 @@ class User(db.Model):
     back_populates='user',
     cascade="all, delete-orphan"
   )
-  
+
   # Email validation
   @validates('email')
   def validate_email(self, key, address):
@@ -85,6 +85,31 @@ class User(db.Model):
     if '@' not in address:
       raise ValueError('Email must have @ in the address')
     return address
+  
+  # Username validation
+  @validates("username")
+  def validate_username(self, key, value):
+      if not value or not value.strip():
+          raise ValueError("Username cannot be empty.")
+      return value
+    
+  # Full name validation
+  @validates("full_name")
+  def validate_full_name(self, key, value):
+      if not value or not value.strip():
+          raise ValueError("Full name cannot be empty.")
+      return value
+
+  # Contact number validation
+  @validates("contact_number")
+  def validate_contact_number(self, key, number):
+    if number is None:
+        return number
+    # Basic phone validation: digits only, optional + at start
+    pattern = r"^\+?\d{7,15}$"
+    if not re.match(pattern, number):
+        raise ValueError("Phone number must be 7–15 digits, optional leading +.")
+    return number
   
   # Password Hash Constraint
   @hybrid_property
