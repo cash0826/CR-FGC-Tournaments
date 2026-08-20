@@ -9,6 +9,17 @@ class RoleSchema(Schema):
   
   # Nested Relationships
   user_roles = fields.List(
-    fields.Nested('UserRoleSchema', only=("id", "user")))
+    fields.Nested(
+      'UserRoleSchema',
+      only=("id", "user"),
+      dump_only=True
+    )
+  )
+  
   permissions = fields.List(
-    fields.Nested('RolePermissionSchema', only=('id', "permission")))
+    fields.Nested(
+      'RolePermissionSchema', 
+      only=('id', "permission"),
+      dump_only=True
+    )
+  )

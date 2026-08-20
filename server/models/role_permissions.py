@@ -4,6 +4,7 @@ from datetime import datetime
 
 class RolePermission(db.Model):
   __tablename__ = "role_permissions"
+  
   id = db.Column(db.Integer, primary_key=True)
   created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
   
