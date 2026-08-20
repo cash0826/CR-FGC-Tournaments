@@ -2,7 +2,7 @@ from config import db, bcrypt
 from datetime import datetime
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
-# No marshmallow extensions since schemas will be in a separate folder
+import re
 
 class User(db.Model):
   __tablename__= "users"

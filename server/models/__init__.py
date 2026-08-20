@@ -1,4 +1,5 @@
 from .users import User
+from .user_roles import UserRole
 
 __all__ = [
   "User", 
