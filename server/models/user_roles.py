@@ -33,7 +33,7 @@ class UserRole(db.Model):
   )
   
   # Validation
-  @validates('user_id', 'roles_id')
+  @validates('user_id', 'role_id')
   def validates_ids(self, key, value):
     if not isinstance(value, int):
       raise ValueError(f"{key} must be an integer")
