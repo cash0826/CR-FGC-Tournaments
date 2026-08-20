@@ -16,9 +16,21 @@ class UserRole(db.Model):
   created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
   
   # Relationships
-  user = db.relationship('User', back_populates='roles', foreign_keys=[user_id])
-  role = db.relationship('Role', back_populates='user_roles')
-  assigned_by_user = db.relationship('User', foreign_keys=[assigned_by])
+  user = db.relationship(
+    'User', 
+    back_populates='roles', 
+    foreign_keys=[user_id]
+  )
+  
+  role = db.relationship(
+    'Role', 
+    back_populates='user_roles'
+  )
+  
+  assigned_by_user = db.relationship(
+    'User', 
+    foreign_keys=[assigned_by]
+  )
   
   # Validation
   @validates('user_id', 'roles_id')
