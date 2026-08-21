@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 class TournamentSchema(Schema):
   id = fields.Int(dump_only=True)
@@ -21,6 +21,14 @@ class TournamentSchema(Schema):
   )
   
   # Nested Relationships
+  events = fields.List(
+    fields.Nested(
+      'EventSchema',
+      only=('id', 'name', 'start_time'),
+      dump_only=True
+    )
+  )
+  
   tournament_attendance = fields.List(
     fields.Nested(
       'TournamentAttendeeSchema',

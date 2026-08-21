@@ -25,6 +25,12 @@ class Tournament(db.Model):
     foreign_keys=[host_id]
   )
   
+  events = db.relationship(
+    'Event',
+    back_populates='tournament',
+    cascade='all, delete-orphan'
+  )
+  
   tournament_attendance = db.relationship(
     'TournamentAttendee',
     back_populates='tournament',
