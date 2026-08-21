@@ -12,6 +12,6 @@ __all__ = [
   "TournamentSchema",
   "EventSchema",
   "MatchSchema",
-  "StandingsSchema",
+  "StandingSchema",
   "BracketSchema"
 ]
