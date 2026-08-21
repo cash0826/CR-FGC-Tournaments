@@ -19,7 +19,7 @@ class PermissionSchema(Schema):
   user_resource_permissions = fields.List(
     fields.Nested(
       'UserResourcePermissionSchema', 
-      only=('id', 'user_id', 'resource_type', 'resource_id'), 
+      only=('id', 'user_id', 'permission_id', 'tournament_id'), 
       dump_only=True
     )
   )

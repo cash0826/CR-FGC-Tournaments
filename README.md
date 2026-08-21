@@ -8,14 +8,14 @@ This is full-stack, React + Flask productivity app to manage upcoming tournament
 
 **Backend**: Python, Pipenv, Flask, Flask-Migrate, Flask-Restful, Flask-Bcrypt, Flask-SQLAlchemy, Flask-JWT-Extended, Bcrypt, Marshmallow, Faker
 
-**Frontend**: JavaScript, Node.js, Vite, React, React Router, eslint, Tailwind CSS, Tailwind Heroicons, date-fns
+**Frontend**: JavaScript, Node.js, Vite, React, React Router, eslint, Tailwind CSS
 
 ## Installation / Set Up Instructions
 
 1. Fork or Clone this repository from GitHub.
     ```
     git clone <repository-url>
-    cd Job_B8
+    cd <repository>
     ```
 
 2. Install Dependencies.\ 
@@ -61,14 +61,11 @@ Change into the client directory and install node dependencies for the frontend.
     ```bash
     npm run dev
     ```
-    To use a seeded user for login, access the app.db instance, select a user, and login with their associated email.  
-    The password is the user's name in lowercase + "password". 
 
 8. Run testing from pipenv (server-side only)
     ```
     pytest -q
     ```
-    **Note** Running tests will also drop SQL tables. To continue using the development server, reinitialize and seed the database.
   
 ## General Overview
 1. 
@@ -86,5 +83,4 @@ Change into the client directory and install node dependencies for the frontend.
 -  
 
 ## Acknowledgements
-- Tailwind CSS and MS Copilot AI for assistance with page design and occasional debugging. 
 - All technologies listed above.

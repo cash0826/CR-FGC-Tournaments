@@ -19,7 +19,8 @@ class Permission(db.Model):
   
   user_resource_permissions = db.relationship(
     'UserResourcePermission',
-    back_populates="permission"
+    back_populates="permission",
+    cascade='all, delete-orphan'
   )
   
   # Slug Validation
