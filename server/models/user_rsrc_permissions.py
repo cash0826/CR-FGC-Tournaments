@@ -11,7 +11,6 @@ class UserResourcePermission(db.Model):
   # Foreign Keys to store User, Permission & Tournament
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'), nullable=False)
-  
   tournament_id = db.Column(db.Integer, db.ForeignKey('tournaments.id'))
   
   # Relationship Mapping
