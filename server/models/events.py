@@ -6,11 +6,11 @@ class Event(db.Model):
   __tablename__ = 'events'
   
   id = db.Column(db.Integer, primary_key=True)
-  registration_deadline = db.Column(db.DateTime, nullable=False)
   name = db.Column(db.String(255), nullable=False)
-  game = db.Column(db.String(255), nullable=True)
   start = db.Column(db.DateTime, nullable=False)
-  end = db.Column(db.DateTime, nullable=True)
+  registration_deadline = db.Column(db.DateTime, nullable=False)
+  game = db.Column(db.String(255), nullable=True)
+  platform = db.Column(db.String(255), nullable=True)
   line_up_type = db.Column(db.String(255), nullable=False)
   
   # Foreign Key to store Tournament

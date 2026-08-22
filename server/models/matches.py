@@ -13,27 +13,23 @@ class Match(db.Model):
   
   # Foreign Keys
   event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
-  player_1_id = db.Column(db.Integer, db.ForeignKey('tournament_attendees.id'), nullable=False)
-  player_2_id = db.Column(db.Integer, db.ForeignKey('tournament_attendees.id'), nullable=False)
   winner_id = db.Column(db.Integer, db.ForeignKey('tournament_attendees.id'), nullable=True)
   
   # -------------
   # Relationships
   # -------------
+
+  # Has many
+  players = db.relationship(
+    'Player',
+    back_populates='match',
+    cascade='all, delete-orphan'
+  )
   
+  # Belong to
   event = db.relationship(
     'Event',
     back_populates='matches'
-  )
-
-  player_1 = db.relationship(
-    'TournamentAttendee',
-    foreign_keys=[player_1_id]
-  )
-  
-  player_2 = db.relationship(
-    'TournamentAttendee',
-    foreign_keys=[player_2_id]
   )
 
   winner = db.relationship(
@@ -42,23 +38,20 @@ class Match(db.Model):
   )
   
   # Validation
-  @validates('player_1_id', 'player_2_id', 'event_id')
-  def validate_ids(self, key, value):
-    if not isinstance(value, int):
-      raise ValueError(f"{key} must be an integer")
-    return value
-
-  @validates('player_2_id')
-  def validate_not_same_player(self, key, value):
-    if value == self.player_1_id:
-      raise ValueError("player_1 and player_2 cannot be the same attendee")
-    return value
-
   @validates('status')
   def validate_status(self, key, value):
     allowed = {"pending", "in_progress", "completed", "cancelled"}
     if value not in allowed:
       raise ValueError(f"Invalid match status: {value}")
+    return value
+
+  @validates('winner_id')
+  def validate_winner(self, key, value):
+    if value is None:
+      return value
+    player_ids = {p.player_id for p in self.players}
+    if value not in player_ids:
+      raise ValueError("Winner must be one of the match players.")
     return value
 
   def __repr__(self):

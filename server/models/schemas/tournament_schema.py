@@ -11,6 +11,7 @@ class TournamentSchema(Schema):
   tie_breaking_rule = fields.Str(allow_none=True)
   created_at = fields.DateTime(dump_only=True)
   
+  # POST/PUT 
   host_id = fields.Int(required=True)
   
   # Belong to a single, nested, Host object (read-only)
@@ -36,13 +37,5 @@ class TournamentSchema(Schema):
       dump_only=True
     )
   )
-  
-  user_resource_permissions = fields.List(
-    fields.Nested(
-      'UserResourcePermissionSchema',
-      only=('id', 'user', 'permission'),
-      dump_only=True
-    )
-  )
-  
+
   

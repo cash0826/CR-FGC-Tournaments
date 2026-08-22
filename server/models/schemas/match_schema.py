@@ -10,27 +10,21 @@ class MatchSchema(Schema):
   )
   
   event_id = fields.Int(required=True)
-  player_1_id = fields.Int(required=True)
-  player_2_id = fields.Int(required=True)
   winner_id = fields.Int(allow_none=True)
   
-  # Belongs to a single Event
+  # Has many
+  players = fields.List(
+    fields.Nested(
+      'PlayerSchema',
+      only=('id', 'attendee'),
+      dump_only=True
+    )
+  )
+  
+  # Belongs to a single object  
   event = fields.Nested(
     'EventSchema',
     only=('id', 'name', 'game'),
-    dump_only=True
-  )
-  
-  # Player 1, 2 and winner are from TournamentAttendees
-  player_1 = fields.Nested(
-    'TournamentAttendeeSchema',
-    only=('id', 'user'),
-    dump_only=True
-  )
-  
-  player_2 = fields.Nested(
-    'TournamentAttendeeSchema',
-    only=('id', 'user'),
     dump_only=True
   )
   

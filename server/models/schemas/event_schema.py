@@ -2,11 +2,11 @@ from marshmallow import Schema, fields, validate
 
 class EventSchema(Schema):
   id = fields.Int(dump_only=True)
-  registration_deadline = fields.DateTime(required=True)
   name = fields.Str(required=True, validate=validate.Length(min=1, max=255))
-  game = fields.Str(allow_none=True, validate=validate.Length(max=255))
   start = fields.DateTime(required=True)
-  end = fields.DateTime(allow_none=True)
+  registration_deadline = fields.DateTime(required=True)
+  game = fields.Str(allow_none=True, validate=validate.Length(max=255))
+  platform = fields.Str(allow_none=True, validate=validate.Length(max=255))
   line_up_type = fields.Str(required=True)
   
   tournament_id = fields.Int(required=True)

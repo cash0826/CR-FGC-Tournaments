@@ -36,12 +36,6 @@ class Tournament(db.Model):
     back_populates='tournament',
     cascade='all, delete-orphan'
   )
-  
-  user_resource_permissions = db.relationship(
-    'UserResourcePermission',
-    back_populates='tournament',
-    cascade='all, delete-orphan'
-  )
 
   # Validation
   @validates('name')
