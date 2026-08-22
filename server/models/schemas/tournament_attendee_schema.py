@@ -3,7 +3,7 @@ from marshmallow import Schema, fields, validate
 class TournamentAttendeeSchema(Schema):
   id = fields.Int(dump_only=True)
   
-  # POST/PUT ready
+  # POST/PUT
   user_id = fields.Int(required=True)
   tournament_id = fields.Int(required=True)
   

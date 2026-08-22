@@ -3,7 +3,6 @@ from marshmallow import Schema, fields, validate
 class RoleSchema(Schema):
   id = fields.Int(dump_only=True)
   name = fields.Str(validate=validate.Length(min=1, max=255))
-  slug = fields.Str(validate=validate.Length(min=1, max=255))
   description = fields.Str(allow_none=True)
   is_system_role = fields.Boolean(dump_only=True)
   

@@ -23,17 +23,13 @@ class UserSchema(Schema):
   roles = fields.List(
     fields.Nested('UserRoleSchema', only=('id', 'role_id'))
   )
-  resource_permissions = fields.List(
-    fields.Nested('UserResourcePermissionSchema', only=('id', 'permission_id'))
-  )
+
   hosted_tournaments = fields.List(
     fields.Nested('TournamentSchema', exclude=('host',))
   )
+  
   tournament_attendance = fields.List(
     fields.Nested('TournamentAttendeeSchema', only=('id', 'tournament_id'))
-  )
-  standings = fields.List(
-    fields.Nested('StandingsSchema', exclude=('user',))
   )
   
   # When serializing, remember that Marshmallow will allow clients to send id, created_at, and updated_at. 

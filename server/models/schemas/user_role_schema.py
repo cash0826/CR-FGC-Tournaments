@@ -2,10 +2,12 @@ from marshmallow import Schema, fields, validate
 
 class UserRoleSchema(Schema):
   id = fields.Int(dump_only=True)
-  assigned_by = fields.Int(dump_only=True)
-  created_at = fields.DateTime(dump_only=True)
   
-  # Single-object relationships, not lists (belongs to)
+  # POST/PUT
+  user_id = fields.Int(required=True)
+  role_id = fields.Int(required=True)
+  
+  # Single-object relationships (belongs to)
   user = fields.Nested(
     'UserSchema', 
     only=('id', 'username'),
@@ -15,12 +17,6 @@ class UserRoleSchema(Schema):
   role = fields.Nested(
     'RoleSchema', 
     only=('id', 'slug', 'name'),
-    dump_only=True
-  )
-  
-  assigned_by_user = fields.Nested(
-    'UserSchema',
-    only=('id', 'username'),
     dump_only=True
   )
   

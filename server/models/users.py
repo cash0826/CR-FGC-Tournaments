@@ -46,13 +46,6 @@ class User(db.Model):
     cascade='all, delete-orphan'
   )
   
-  # User → Resource‑Scoped Permissions. Many to Many
-  resource_permissions = db.relationship(
-    'UserResourcePermission',
-    back_populates='user',
-    cascade='all, delete-orphan'
-  )
-  
   # User → Tournament Host. One to Many
   hosted_tournaments = db.relationship(
     'Tournament',
@@ -65,13 +58,6 @@ class User(db.Model):
     'TournamentAttendee',
     back_populates="user",
     cascade='all, delete-orphan'
-  )
-  
-  # User → Standings (rankings). One to Many.
-  standings = db.relationship(
-    'Standings',
-    back_populates='user',
-    cascade="all, delete-orphan"
   )
 
   # Email validation
@@ -110,6 +96,24 @@ class User(db.Model):
     if not re.match(pattern, number):
         raise ValueError("Phone number must be 7–15 digits, optional leading +.")
     return number
+
+  # DOB Validation
+  @validates("date_of_birth")
+  def validate_dob(self, key, value):
+    if value is None:
+      raise ValueError("date_of_birth is required.")
+    return value
+
+  # Profile_Pic_URL Validation
+  @validates("profile_pic_url")
+  def validate_profile_pic_url(self, key, value):
+    if value is None:
+      return value
+    if not isinstance(value, str):
+      raise ValueError("Profile picture URL must be a string.")
+    if len(value) > 500:
+      raise ValueError("Profile picture URL cannot exceed 500 characters.")
+    return value.strip()
   
   # Password Hash Constraint
   @hybrid_property
@@ -132,28 +136,9 @@ class User(db.Model):
   # Methods
   # --------------
   
-  def has_role(self, slug: str) -> bool:
-    """Check if user has a global role by slug."""
-    return any(ur.role.slug == slug for ur in self.roles)
-  
-  def has_permission(self, permission_slug: str) -> bool:
-    """Check global RBAC permission."""
-    for ur in self.roles:
-      for rp in ur.role.permissions:
-        if rp.permission.slug == permission_slug:
-          return True
-    return False
-
-  def has_resource_permission(self, permission_slug: str, resource_type: str, resource_id: int) -> bool:
-    """Check scoped permission (tournament/event/match)."""
-    for rp in self.resource_permissions:
-      if (
-        rp.permission.slug == permission_slug and
-        rp.resource_type == resource_type and
-        rp.resource_id == resource_id
-      ):
-        return True
-    return False
+  def has_role(self, name: str) -> bool:
+    """Check if user has a role by role name."""
+    return any(ur.role.name == name for ur in self.roles)
 
   def __repr__(self):
     return f"<User id={self.id} username={self.username or 'N/A'}>"

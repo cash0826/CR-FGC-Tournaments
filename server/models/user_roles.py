@@ -11,10 +11,6 @@ class UserRole(db.Model):
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
   
-  # Audit trail
-  assigned_by = db.Column(db.Integer, db.ForeignKey('users.id', nullable=True))
-  created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-  
   # Relationships
   user = db.relationship(
     'User', 
@@ -27,11 +23,6 @@ class UserRole(db.Model):
     back_populates='user_roles'
   )
   
-  assigned_by_user = db.relationship(
-    'User', 
-    foreign_keys=[assigned_by]
-  )
-  
   # Validation
   @validates('user_id', 'role_id')
   def validates_ids(self, key, value):
@@ -40,4 +31,4 @@ class UserRole(db.Model):
     return value
   
   def __repr__(self):
-    return f"<UserRoles id={self.id} user_id={self.user_id} role_id={self.role_id}"
+    return f"<UserRoles id={self.id} user_id={self.user_id} role_id={self.role_id}>"
